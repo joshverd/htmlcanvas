@@ -1,0 +1,112 @@
+﻿        window.onload = function(){
+            var canvas = document.getElementById("canvas"); //canvas element
+            var c = canvas.getContext('2d');
+            c.fillStyle = "black";
+            c.fillRect(0, 0, canvas.width, canvas.height);
+
+            c.fillStyle = "red";
+            c.fillRect(20, 20, 50, 50);
+
+            c.strokeStyle = "white";
+            c.lineWidth = 10;
+            c.strokeRect(20, 20, 50, 50);
+
+            c.strokeStyle = "blue";
+            c.lineWidth = 5;
+
+            c.beginPath();
+            c.moveTo(100, 100);
+            c.lineTo(150, 200);
+            c.lineTo(200, 200);
+            c.lineTo(250, 200);
+            c.closePath();
+            c.stroke();
+            c.fill();
+
+            c.fillStyle = "white"
+            c.font = "50px Helvetica";
+            c.fillText("hello", 200, 200);
+
+            c.beginPath();
+            c.arc(200, 340, 50, 0, Math.PI * 2, false);
+            c.fill();
+
+
+        }
+
+
+
+
+		//
+
+		                particles = {},
+                particleIndex = 0,
+                particleNum = 3;
+            /*
+            setInterval(function () {
+                c.fillStyle = "black";
+                c.fillRect(0, 0, canvas.width, canvas.height);
+                posX += vx;
+                posY += vy;
+                
+
+                if (posY > 300) {
+                    vy *= -0.5;
+                    vx *= .5;
+                    posY = 300;
+                }
+                vy += gravity;
+                c.fillStyle = "white";
+                c.fillRect(posX, posY, 10, 10);
+            }, 30);
+            */
+            function Particle() {
+                this.x = canvas.width / 2;
+                this.y = canvas.height / 2;
+                this.vx = Math.random() * 10 - 5;
+                this.vy = Math.random() * 10 - 5;
+                this.gravity = 0;
+                particleIndex++;
+                particles[particleIndex] = this;
+                this.id = particleIndex;
+                this.life = 0;
+                this.maxLife = 100;
+            }
+            Particle.prototype.draw = function () {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (Math.random() < .1) {
+                    this.vx = Math.random() * 10 - 5;
+                }
+
+                this.life++;
+                this.vy += this.gravity;
+                if (this.life == this.maxLife) {
+                    delete particles[this.id];
+                }
+                c.fillStyle = "rgba(255,255,255,.5)";
+                c.fillRect(this.x, this.y, 10, 10);
+            };
+
+            
+
+
+            setInterval(function () {
+                c.fillStyle = "black";
+                c.fillRect(0, 0, canvas.width, canvas.height);
+                for (var i in particles) {
+                    particles[i].draw();
+                }
+                for (var i = 0; i < particleNum; i++) {
+                    new Particle();
+                }
+            }, 30);
+
+
+
+			KEYCODES --
+
+			W - 87
+			A - 65
+			S - 83
+			D - 68

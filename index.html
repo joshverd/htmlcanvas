@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Canvas Test</title>
+	<meta charset="utf-8" />
+    <style>
+        canvas{
+            border:Grey 1px solid;
+        }
+        .block {
+            border: Red 1px solid;
+            width:10px;
+            height:10px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var canvas = document.getElementById("canvas"),
+                c = canvas.getContext('2d');
+
+            var xPos = 0;
+            var yPos = 0;
+
+            c.rect(xPos, yPos, 50, 50);
+            c.stroke();
+            function move(e) {
+                //W - 87
+                //A - 65
+                //S - 83
+                //D - 68
+
+                //w
+                if (e.keyCode == 87) {
+                    yPos -= 5;
+                }
+                //a
+                if (e.keyCode == 65) {
+                    xPos -= 5;
+                }
+                //s
+                if (e.keyCode == 83) {
+                    yPos += 5;
+                }
+                //d
+                if (e.keyCode == 68) {
+                    xPos+=5
+                }
+                canvas.width = canvas.width;
+                c.rect(xPos, yPos, 50, 50);
+                c.stroke();
+                document.getElementById('position').innerHTML = "X: " + xPos + " Y: " + yPos;
+            }
+            document.onkeydown = move;
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="400" height="400"><div id="block"></div></canvas>
+    <h3 id="position">X: 0 Y: 0</h3>
+</body>
+</html>
